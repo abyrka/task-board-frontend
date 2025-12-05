@@ -8,11 +8,28 @@ In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Runs the app in the development mode.
+
+By default this project is configured to run the dev server on port `3002`.
+Open http://localhost:3002 to view it in your browser.
+
+Routes
+ - Create User: `/create-user` — form to add a new user
+ - Create Board: `/create-board` — form to add a new board (select owner)
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+
+Environment
+ - `PORT`: Development server port (set to `3002` in `.env`)
+ - `REACT_APP_API_URL`: Base URL for the API used by the frontend
+
+Example `.env`:
+
+```
+REACT_APP_API_URL=http://localhost:3001
+PORT=3002
+```
 
 ### `npm test`
 
