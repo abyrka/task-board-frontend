@@ -7,6 +7,5 @@
 # Production stage
 FROM nginx:alpine
 COPY build/ /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
-# Optional: custom nginx config for SPA routing
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
