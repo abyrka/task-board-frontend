@@ -1,0 +1,36 @@
+@import '../styles/variables';
+
+.user-list,
+.board-list {
+  padding: $spacing-md;
+  background-color: $background-dark;
+  min-height: 100vh;
+  color: $text-light;
+
+  h2 {
+    color: $text-light;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    margin-bottom: $spacing-sm;
+    padding: $spacing-sm;
+    background-color: $secondary-bg;
+    border-radius: $border-radius;
+    color: $text-dark;
+  }
+
+  a {
+    color: $primary-color;
+    text-decoration: none;
+    margin-right: $spacing-sm;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

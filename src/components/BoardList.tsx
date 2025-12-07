@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useBoardStore } from '../store/boardStore';
 import { Link } from 'react-router-dom';
+import './BoardList.scss';
 
 const BoardList: React.FC = () => {
   const boards = useBoardStore((s) => s.boards);
@@ -13,19 +14,24 @@ const BoardList: React.FC = () => {
   }, [fetchBoards]);
 
   return (
-    <div style={{ padding: 20 }}>
+    <div className="board-list">
       <h2>Boards</h2>
       {loading && <div>Loading...</div>}
-      {error && <div style={{ color: 'red' }}>{error}</div>}
+      {error && <div className="error">{error}</div>}
       <ul>
         {boards.map((board) => (
           <li key={board._id}>
-            <strong>{board.name}</strong> (Owner: {board.ownerId})
-            {/* Add link to board details if needed */}
+            <Link to={`/boards/${board._id}`}>
+              <strong>{board.name}</strong>
+              <div className="board-owner">Owner ID: {board.ownerId}</div>
+            </Link>
           </li>
         ))}
       </ul>
-      <Link to="/create-board">Create New Board</Link>
+      <div className="actions">
+        <Link to="/">← Back to Home</Link>
+        <Link to="/create-board">Create New Board</Link>
+      </div>
     </div>
   );
 };

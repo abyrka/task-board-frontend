@@ -1,0 +1,74 @@
+@import '../styles/variables';
+
+// Local component-specific variables
+$hamburger-width: 25px;
+$hamburger-height: 3px;
+$hamburger-gap: 5px;
+$hamburger-padding: 8px;
+$nav-min-width: 180px;
+$nav-margin-top: 8px;
+
+.hamburger-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.hamburger-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: $hamburger-gap;
+  padding: $hamburger-padding;
+  font-size: 20px;
+
+  span {
+    width: $hamburger-width;
+    height: $hamburger-height;
+    background-color: $text-light;
+    border-radius: 2px;
+    display: block;
+    transition: 0.3s;
+  }
+}
+
+.hamburger-nav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: $border-width solid $border-color;
+  border-radius: $border-radius;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: $nav-min-width;
+  z-index: 1000;
+  margin-top: $nav-margin-top;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    margin: 0;
+  }
+
+  a {
+    display: block;
+    padding: 12px 16px;
+    color: $text-dark;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    border-bottom: $border-width solid #eee;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: $hover-color;
+    }
+  }
+}
