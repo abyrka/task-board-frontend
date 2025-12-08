@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TaskStatus, TASK_STATUS_LABELS } from '../../../types';
+import { TaskStatus } from '../../../types';
 import './TaskModal.scss';
 
 interface TaskModalProps {
