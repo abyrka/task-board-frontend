@@ -44,14 +44,28 @@
   }
 
   .task-item {
-    padding: $spacing-sm;
     background-color: $secondary-bg;
     border-radius: $border-radius;
     margin-bottom: $spacing-sm;
     color: $text-dark;
-    display: flex;
-    align-items: center;
-    gap: $spacing-md;
+    overflow: hidden;
+
+    &.active {
+      background-color: #4a515e;
+    }
+
+    .task-header {
+      padding: $spacing-sm;
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: #3d4148;
+      }
+    }
 
     .task-title {
       flex: 1;
@@ -108,6 +122,12 @@
           color: $text-light;
         }
       }
+    }
+
+    .task-comments-wrapper {
+      padding: 0 $spacing-sm $spacing-sm $spacing-sm;
+      border-top: 1px solid #555;
+      margin-top: $spacing-sm;
     }
   }
 

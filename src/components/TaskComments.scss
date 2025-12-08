@@ -1,0 +1,123 @@
+@import '../styles/variables';
+
+.task-comments {
+  margin-top: $spacing-lg;
+  padding: $spacing-md;
+  background-color: $secondary-bg;
+  border-radius: $border-radius;
+  color: $text-dark;
+
+  h4 {
+    margin-top: 0;
+    margin-bottom: $spacing-md;
+    color: $text-dark;
+  }
+
+  .comments-list {
+    margin-bottom: $spacing-md;
+    max-height: 400px;
+    overflow-y: auto;
+
+    .no-comments {
+      color: #999;
+      font-style: italic;
+      text-align: center;
+      padding: $spacing-md 0;
+      margin: 0;
+    }
+
+    .comment {
+      background-color: white;
+      padding: $spacing-sm;
+      margin-bottom: $spacing-sm;
+      border-radius: 4px;
+      border-left: 3px solid $primary-color;
+
+      .comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+
+        strong {
+          color: $text-dark;
+          font-weight: 600;
+        }
+
+        .comment-date {
+          font-size: 0.85rem;
+          color: #999;
+        }
+      }
+
+      .comment-text {
+        margin: 8px 0;
+        color: #333;
+        word-break: break-word;
+        line-height: 1.4;
+      }
+
+      .btn-delete-comment {
+        padding: 4px 8px;
+        background-color: $error-color;
+        color: $text-light;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: opacity 0.2s;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+
+  .comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    textarea {
+      width: 100%;
+      padding: $spacing-sm;
+      border: $border-width solid $border-color;
+      border-radius: $border-radius;
+      font-family: inherit;
+      font-size: $font-size-base;
+      color: $text-dark;
+      resize: vertical;
+
+      &::placeholder {
+        color: #999;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+
+    .btn-submit-comment {
+      align-self: flex-end;
+      padding: 8px 16px;
+      background-color: $primary-color;
+      color: $text-dark;
+      border: none;
+      border-radius: $border-radius;
+      cursor: pointer;
+      font-weight: 500;
+      transition: opacity 0.2s;
+
+      &:hover:not(:disabled) {
+        opacity: 0.8;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

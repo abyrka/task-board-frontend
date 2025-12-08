@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useCurrentUser } from '../context/CurrentUserContext';
-import { useBoardStore } from '../store/boardStore';
+import { useUsersStore } from '../store';
 import './UserSelector.scss';
 
 const UserSelector: React.FC = () => {
   const { currentUser, setCurrentUser } = useCurrentUser();
-  const users = useBoardStore((s) => s.users);
-  const fetchUsers = useBoardStore((s) => s.fetchUsers);
+  const users = useUsersStore((s) => s.users);
+  const fetchUsers = useUsersStore((s) => s.fetchUsers);
 
   useEffect(() => {
     fetchUsers();

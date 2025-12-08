@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useBoardStore } from '../store/boardStore';
+import { useUsersStore } from '../store';
 import { Link } from 'react-router-dom';
 import UserModal from '../components/UserModal';
 import './UserList.scss';
 
 const UserList: React.FC = () => {
-  const users = useBoardStore((s) => s.users);
-  const fetchUsers = useBoardStore((s) => s.fetchUsers);
-  const createUser = useBoardStore((s) => s.createUser);
-  const updateUser = useBoardStore((s) => s.updateUser);
-  const deleteUser = useBoardStore((s) => s.deleteUser);
-  const loading = useBoardStore((s) => s.loading);
-  const error = useBoardStore((s) => s.error);
+  const users = useUsersStore((s) => s.users);
+  const fetchUsers = useUsersStore((s) => s.fetchUsers);
+  const createUser = useUsersStore((s) => s.createUser);
+  const updateUser = useUsersStore((s) => s.updateUser);
+  const deleteUser = useUsersStore((s) => s.deleteUser);
+  const loading = useUsersStore((s) => s.loading);
+  const error = useUsersStore((s) => s.error);
   const [showModal, setShowModal] = useState(false);
   const [editingUser, setEditingUser] = useState<{ _id: string; name: string; email: string } | null>(null);
 

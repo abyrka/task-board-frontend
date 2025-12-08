@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useBoardStore } from '../store/boardStore';
+import { useBoardsStore, useTasksStore, useUsersStore } from '../store';
 import { TaskStatus, TASK_STATUS_LABELS } from '../types';
 import TaskModal from '../components/TaskModal';
+import TaskComments from '../components/TaskComments';
 import './BoardDetail.scss';
 
 const BoardDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const boards = useBoardStore((s) => s.boards);
-  const tasks = useBoardStore((s) => s.tasks);
-  const users = useBoardStore((s) => s.users);
-  const fetchBoards = useBoardStore((s) => s.fetchBoards);
-  const fetchBoardTasks = useBoardStore((s) => s.fetchBoardTasks);
-  const fetchUsers = useBoardStore((s) => s.fetchUsers);
-  const updateTask = useBoardStore((s) => s.updateTask);
-  const deleteTask = useBoardStore((s) => s.deleteTask);
-  const loading = useBoardStore((s) => s.loading);
-  const error = useBoardStore((s) => s.error);
+  const boards = useBoardsStore((s) => s.boards);
+  const tasks = useTasksStore((s) => s.tasks);
+  const users = useUsersStore((s) => s.users);
+  const fetchBoards = useBoardsStore((s) => s.fetchBoards);
+  const fetchBoardTasks = useTasksStore((s) => s.fetchBoardTasks);
+  const fetchUsers = useUsersStore((s) => s.fetchUsers);
+  const updateTask = useTasksStore((s) => s.updateTask);
+  const deleteTask = useTasksStore((s) => s.deleteTask);
+  const loading = useTasksStore((s) => s.loading);
+  const error = useTasksStore((s) => s.error);
   const [showModal, setShowModal] = useState(false);
   const [editingTask, setEditingTask] = useState<{ _id: string; title: string; status: string } | null>(null);
+  const [selectedTask, setSelectedTask] = useState<string | null>(null);
 
   const board = boards.find((b) => b._id === id);
 
@@ -42,7 +44,7 @@ const BoardDetail: React.FC = () => {
       if (editingTask) {
         await updateTask(editingTask._id, { title, status });
       } else {
-        const createTask = useBoardStore.getState().createTask;
+        const createTask = useTasksStore.getState().createTask;
         await createTask(id, title, status);
       }
       setShowModal(false);
@@ -109,15 +111,42 @@ const BoardDetail: React.FC = () => {
         ) : (
           <ul className="tasks-list">
             {tasks.map((task) => (
-              <li key={task._id} className="task-item">
-                <span className="task-title">{task.title}</span>
-                <span className={`task-status status-${task.status}`}>
-                  {TASK_STATUS_LABELS[task.status as TaskStatus]}
-                </span>
-                <div className="task-actions">
-                  <button className="btn-edit" onClick={() => handleEditTask(task)}>Edit</button>
-                  <button className="btn-delete" onClick={() => handleDeleteTask(task._id)}>Delete</button>
+              <li
+                key={task._id}
+                className={`task-item ${selectedTask === task._id ? 'active' : ''}`}
+                onClick={() => setSelectedTask(selectedTask === task._id ? null : task._id)}
+              >
+                <div className="task-header">
+                  <span className="task-title">{task.title}</span>
+                  <span className={`task-status status-${task.status}`}>
+                    {TASK_STATUS_LABELS[task.status as TaskStatus]}
+                  </span>
+                  <div className="task-actions">
+                    <button
+                      className="btn-edit"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleEditTask(task);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn-delete"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteTask(task._id);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
+                {selectedTask === task._id && (
+                  <div className="task-comments-wrapper">
+                    <TaskComments taskId={task._id} />
+                  </div>
+                )}
               </li>
             ))}
           </ul>

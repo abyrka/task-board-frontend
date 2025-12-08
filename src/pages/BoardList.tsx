@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useBoardStore } from '../store/boardStore';
+import { useBoardsStore, useUsersStore } from '../store';
 import { useCurrentUser } from '../context/CurrentUserContext';
 import { Link } from 'react-router-dom';
 import BoardModal from '../components/BoardModal';
 import './BoardList.scss';
 
 const BoardList: React.FC = () => {
-  const boards = useBoardStore((s) => s.boards);
-  const fetchBoards = useBoardStore((s) => s.fetchBoards);
-  const createBoard = useBoardStore((s) => s.createBoard);
-  const updateBoard = useBoardStore((s) => s.updateBoard);
-  const deleteBoard = useBoardStore((s) => s.deleteBoard);
-  const users = useBoardStore((s) => s.users);
-  const fetchUsers = useBoardStore((s) => s.fetchUsers);
-  const loading = useBoardStore((s) => s.loading);
-  const error = useBoardStore((s) => s.error);
+  const boards = useBoardsStore((s) => s.boards);
+  const fetchBoards = useBoardsStore((s) => s.fetchBoards);
+  const createBoard = useBoardsStore((s) => s.createBoard);
+  const updateBoard = useBoardsStore((s) => s.updateBoard);
+  const deleteBoard = useBoardsStore((s) => s.deleteBoard);
+  const users = useUsersStore((s) => s.users);
+  const fetchUsers = useUsersStore((s) => s.fetchUsers);
+  const loading = useBoardsStore((s) => s.loading);
+  const error = useBoardsStore((s) => s.error);
   const { currentUser } = useCurrentUser();
   const [showModal, setShowModal] = useState(false);
   const [editingBoard, setEditingBoard] = useState<{ _id: string; name: string } | null>(null);
