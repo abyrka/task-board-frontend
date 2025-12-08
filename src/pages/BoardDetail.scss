@@ -1,0 +1,266 @@
+@import '../styles/variables';
+
+.board-detail {
+  padding: $spacing-md;
+  background-color: $background-dark;
+  min-height: 100vh;
+  color: $text-light;
+
+  h2 {
+    color: $text-light;
+    margin-bottom: $spacing-sm;
+  }
+
+  h3 {
+    color: $text-light;
+    margin-top: $spacing-md;
+    margin-bottom: $spacing-sm;
+  }
+
+  .board-info {
+    color: #aaa;
+    font-size: $font-size-small;
+    margin-bottom: $spacing-md;
+  }
+
+  .error {
+    color: $error-color;
+    margin-bottom: $spacing-md;
+  }
+
+  .tasks-section {
+    margin-bottom: $spacing-lg;
+  }
+
+  .no-tasks {
+    color: #aaa;
+    font-style: italic;
+  }
+
+  .tasks-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: $spacing-md;
+  }
+
+  .task-item {
+    padding: $spacing-sm;
+    background-color: $secondary-bg;
+    border-radius: $border-radius;
+    margin-bottom: $spacing-sm;
+    color: $text-dark;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+
+    .task-title {
+      flex: 1;
+      font-weight: 500;
+    }
+
+    .task-status {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      white-space: nowrap;
+
+      &.status-todo {
+        background-color: #555;
+        color: $text-light;
+      }
+
+      &.status-in-progress {
+        background-color: #f39c12;
+        color: #000;
+      }
+
+      &.status-done {
+        background-color: #27ae60;
+        color: $text-light;
+      }
+    }
+
+    .task-actions {
+      display: flex;
+      gap: $spacing-sm;
+
+      button {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: $font-size-small;
+        font-weight: 500;
+        transition: opacity 0.2s;
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+        &.btn-edit {
+          background-color: $primary-color;
+          color: $text-dark;
+        }
+
+        &.btn-delete {
+          background-color: $error-color;
+          color: $text-light;
+        }
+      }
+    }
+  }
+
+  .create-task-btn {
+    color: $primary-color;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: $font-size-base;
+    transition: text-decoration 0.2s;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &::before {
+      content: '+ ';
+      margin-right: 4px;
+    }
+  }
+
+  .actions {
+    margin-top: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    a {
+      color: $primary-color;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background-color: $secondary-bg;
+    padding: $spacing-lg;
+    border-radius: $border-radius;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    color: $text-dark;
+
+    h3 {
+      color: $text-dark;
+      margin-top: 0;
+      margin-bottom: $spacing-md;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: $text-dark;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        color: $error-color;
+      }
+    }
+
+    input,
+    select {
+      display: block;
+      width: 100%;
+      margin-bottom: $spacing-md;
+      padding: $spacing-sm;
+      border: $border-width solid $border-color;
+      border-radius: $border-radius;
+      background-color: white;
+      color: $text-dark;
+      font-family: inherit;
+      font-size: $font-size-base;
+      box-sizing: border-box;
+
+      &::placeholder {
+        color: #999;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
+
+    button {
+      flex: 1;
+      padding: $spacing-sm $spacing-md;
+      border: none;
+      border-radius: $border-radius;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: $font-size-base;
+      transition: background-color 0.2s;
+    }
+
+    .btn-save {
+      background-color: $primary-color;
+      color: $background-dark;
+
+      &:hover {
+        background-color: #4fa8c5;
+      }
+    }
+
+    .btn-cancel {
+      background-color: #555;
+      color: $text-light;
+
+      &:hover {
+        background-color: #666;
+      }
+    }
+  }
+
+  .back-link {
+    color: $primary-color;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

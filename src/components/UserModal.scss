@@ -1,0 +1,110 @@
+@import '../styles/variables';
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: $spacing-lg;
+  border-radius: $border-radius;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+
+  h3 {
+    color: $text-dark;
+    margin-top: 0;
+    margin-bottom: $spacing-md;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: $text-dark;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: $error-color;
+    }
+  }
+
+  input,
+  select {
+    display: block;
+    width: 100%;
+    margin-bottom: $spacing-md;
+    padding: $spacing-sm;
+    border: $border-width solid $border-color;
+    border-radius: $border-radius;
+    background-color: white;
+    color: $text-dark;
+    font-family: inherit;
+    font-size: $font-size-base;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: #999;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
+
+    button {
+      flex: 1;
+      padding: $spacing-sm $spacing-md;
+      border: none;
+      border-radius: $border-radius;
+      cursor: pointer;
+      font-size: $font-size-base;
+      font-weight: 500;
+      transition: opacity 0.2s;
+
+      &:hover:not(:disabled) {
+        opacity: 0.8;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      &.btn-save {
+        background-color: $primary-color;
+        color: $text-dark;
+      }
+
+      &.btn-cancel {
+        background-color: #ccc;
+        color: $text-dark;
+      }
+    }
+  }
+}

@@ -1,0 +1,219 @@
+@import '../styles/variables';
+
+.user-list {
+  padding: $spacing-md;
+  background-color: $background-dark;
+  min-height: 100vh;
+  color: $text-light;
+
+  h2 {
+    color: $text-light;
+  }
+
+  h3 {
+    color: $text-dark;
+    margin-top: 0;
+    margin-bottom: $spacing-md;
+  }
+
+  .error {
+    color: $error-color;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    margin-bottom: $spacing-sm;
+    padding: $spacing-sm;
+    background-color: $secondary-bg;
+    border-radius: $border-radius;
+    color: $text-dark;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing-md;
+
+    .user-info {
+      flex: 1;
+
+      strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .user-email {
+        font-size: $font-size-small;
+        color: #666;
+      }
+    }
+
+    .user-actions {
+      display: flex;
+      gap: $spacing-sm;
+
+      button {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: $font-size-small;
+        font-weight: 500;
+        transition: opacity 0.2s;
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+        &.btn-edit {
+          background-color: $primary-color;
+          color: $text-dark;
+        }
+
+        &.btn-delete {
+          background-color: $error-color;
+          color: $text-light;
+        }
+      }
+    }
+  }
+
+  .actions {
+    margin-top: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    a {
+      color: $primary-color;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .create-user-link {
+    color: $primary-color;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: $font-size-base;
+    transition: text-decoration 0.2s;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &::before {
+      content: '+ ';
+      margin-right: 4px;
+    }
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background-color: $secondary-bg;
+    padding: $spacing-lg;
+    border-radius: $border-radius;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    color: $text-dark;
+
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: $text-dark;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        color: $error-color;
+      }
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      margin-bottom: $spacing-md;
+      padding: $spacing-sm;
+      border: $border-width solid $border-color;
+      border-radius: $border-radius;
+      background-color: white;
+      color: $text-dark;
+      font-family: inherit;
+      font-size: $font-size-base;
+      box-sizing: border-box;
+
+      &::placeholder {
+        color: #999;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
+
+    button {
+      flex: 1;
+      padding: $spacing-sm $spacing-md;
+      border: none;
+      border-radius: $border-radius;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: $font-size-base;
+      transition: background-color 0.2s;
+    }
+
+    .btn-save {
+      background-color: $primary-color;
+      color: $background-dark;
+
+      &:hover {
+        background-color: #4fa8c5;
+      }
+    }
+
+    .btn-cancel {
+      background-color: #555;
+      color: $text-light;
+
+      &:hover {
+        background-color: #666;
+      }
+    }
+  }
+}
