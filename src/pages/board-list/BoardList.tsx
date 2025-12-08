@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useBoardsStore, useUsersStore } from '../store';
-import { useCurrentUser } from '../context/CurrentUserContext';
+import { useBoardsStore, useUsersStore } from '../../store';
+import { useCurrentUser } from '../../context/CurrentUserContext';
 import { Link } from 'react-router-dom';
-import BoardModal from '../components/BoardModal';
+import BoardModal from './components/BoardModal';
 import './BoardList.scss';
 
 const BoardList: React.FC = () => {
@@ -81,7 +81,7 @@ const BoardList: React.FC = () => {
       <ul>
         {boards.map((board) => (
           <li key={board._id}>
-            <Link to={`/boards/${board._id}`} className="board-link">
+            <Link to={`/boards/${board._id}/tasks`} className="board-link">
               <div className="board-info-section">
                 <strong>{board.name}</strong>
                 <div className="board-owner">Owner: {getOwnerName(board.ownerId)}</div>

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useBoardsStore, useTasksStore, useUsersStore } from '../store';
-import { TaskStatus, TASK_STATUS_LABELS } from '../types';
-import TaskModal from '../components/TaskModal';
-import TaskComments from '../components/TaskComments';
-import './BoardDetail.scss';
+import { useBoardsStore, useTasksStore, useUsersStore } from '../../store';
+import { TaskStatus, TASK_STATUS_LABELS } from '../../types';
+import TaskModal from './components/TaskModal';
+import TaskComments from './components/TaskComments';
+import './TaskList.scss';
 
-const BoardDetail: React.FC = () => {
+const TaskList: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const boards = useBoardsStore((s) => s.boards);
   const tasks = useTasksStore((s) => s.tasks);
@@ -173,4 +173,4 @@ const BoardDetail: React.FC = () => {
   );
 };
 
-export default BoardDetail;
+export default TaskList;

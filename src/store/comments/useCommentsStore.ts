@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { apiClient } from '../api/client';
+import { apiClient } from '../../api/client';
 import { Comment } from './types';
 
 interface CommentsStore {

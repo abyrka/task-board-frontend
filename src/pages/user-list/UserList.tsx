@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useUsersStore } from '../store';
+import { useUsersStore } from '../../store';
 import { Link } from 'react-router-dom';
-import UserModal from '../components/UserModal';
+import UserModal from './components/UserModal';
 import './UserList.scss';
 
 const UserList: React.FC = () => {

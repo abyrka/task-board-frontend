@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TaskStatus, TASK_STATUS, TASK_STATUS_LABELS } from '../types';
+import { TaskStatus, TASK_STATUS_LABELS } from '../../../types';
 import './TaskModal.scss';
 
 interface TaskModalProps {
@@ -10,7 +10,7 @@ interface TaskModalProps {
 
 const TaskModal: React.FC<TaskModalProps> = ({ task, onSave, onClose }) => {
   const [taskTitle, setTaskTitle] = useState('');
-  const [taskStatus, setTaskStatus] = useState<TaskStatus>(TASK_STATUS.TODO);
+  const [taskStatus, setTaskStatus] = useState<TaskStatus>('todo');
 
   useEffect(() => {
     if (task) {
@@ -18,7 +18,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, onSave, onClose }) => {
       setTaskStatus(task.status as TaskStatus);
     } else {
       setTaskTitle('');
-      setTaskStatus(TASK_STATUS.TODO);
+      setTaskStatus('todo');
     }
   }, [task]);
 
@@ -30,7 +30,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, onSave, onClose }) => {
 
   const handleClose = () => {
     setTaskTitle('');
-    setTaskStatus(TASK_STATUS.TODO);
+    setTaskStatus('todo');
     onClose();
   };
 
@@ -51,9 +51,9 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, onSave, onClose }) => {
           value={taskStatus}
           onChange={(e) => setTaskStatus(e.target.value as TaskStatus)}
         >
-          <option value={TASK_STATUS.TODO}>{TASK_STATUS_LABELS[TASK_STATUS.TODO]}</option>
-          <option value={TASK_STATUS.IN_PROGRESS}>{TASK_STATUS_LABELS[TASK_STATUS.IN_PROGRESS]}</option>
-          <option value={TASK_STATUS.DONE}>{TASK_STATUS_LABELS[TASK_STATUS.DONE]}</option>
+          <option value="todo">To Do</option>
+          <option value="in-progress">In Progress</option>
+          <option value="done">Done</option>
         </select>
         <div className="form-actions">
           <button className="btn-save" onClick={handleSave}>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useCommentsStore, useTasksStore, useUsersStore } from '../store';
-import { useCurrentUser } from '../context/CurrentUserContext';
+import { useCommentsStore, useTasksStore, useUsersStore } from '../../../store';
+import { useCurrentUser } from '../../../context/CurrentUserContext';
 import './TaskComments.scss';
 
 interface TaskCommentsProps {

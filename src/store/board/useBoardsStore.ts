@@ -1,29 +1,31 @@
-import { apiClient } from '../api/client';
+import { create } from 'zustand';
+import { apiClient } from '../../api/client';
 import { Board } from './types';
-import { StateCreator } from 'zustand';
 
-export interface BoardsSlice {
+interface BoardsStore {
   boards: Board[];
+  loading: boolean;
+  error: string | null;
   fetchBoards: () => Promise<void>;
   createBoard: (name: string, ownerId: string) => Promise<Board>;
   updateBoard: (id: string, name: string) => Promise<void>;
   deleteBoard: (id: string) => Promise<void>;
 }
 
-type BoardsStateCreator = StateCreator<BoardsSlice, [], [], BoardsSlice>;
-
-export const createBoardsSlice: BoardsStateCreator = (set) => ({
+export const useBoardsStore = create<BoardsStore>((set) => ({
   boards: [],
+  loading: false,
+  error: null,
 
   fetchBoards: async () => {
-    set({ loading: true, error: null } as any);
+    set({ loading: true, error: null });
     try {
       const res = await apiClient.get('/boards');
       set({ boards: res.data });
     } catch (err: any) {
-      set({ error: err.response?.data?.message || 'Failed to fetch boards' } as any);
+      set({ error: err.response?.data?.message || 'Failed to fetch boards' });
     } finally {
-      set({ loading: false } as any);
+      set({ loading: false });
     }
   },
 
@@ -56,4 +58,4 @@ export const createBoardsSlice: BoardsStateCreator = (set) => ({
       throw new Error(err.response?.data?.message || 'Failed to delete board');
     }
   },
-});
+}));

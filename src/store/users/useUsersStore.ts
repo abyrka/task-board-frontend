@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { apiClient } from '../api/client';
+import { apiClient } from '../../api/client';
 import { User } from './types';
 
 interface UsersStore {

@@ -1,6 +1,6 @@
 import React from 'react';
-import UserSelector from '../components/UserSelector';
-import HamburgerMenu from '../components/HamburgerMenu';
+import UserSelector from '../../components/UserSelector';
+import HamburgerMenu from '../../components/HamburgerMenu';
 import './Home.scss';
 
 const Home: React.FC = () => {

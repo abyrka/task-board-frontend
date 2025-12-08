@@ -1,6 +1,6 @@
-@import '../styles/variables';
+@import '../../styles/variables';
 
-.board-list {
+.board-detail {
   padding: $spacing-md;
   background-color: $background-dark;
   min-height: 100vh;
@@ -8,56 +8,94 @@
 
   h2 {
     color: $text-light;
+    margin-bottom: $spacing-sm;
   }
 
   h3 {
-    color: $text-dark;
-    margin-top: 0;
+    color: $text-light;
+    margin-top: $spacing-md;
+    margin-bottom: $spacing-sm;
+  }
+
+  .board-info {
+    color: #aaa;
+    font-size: $font-size-small;
     margin-bottom: $spacing-md;
   }
 
   .error {
     color: $error-color;
+    margin-bottom: $spacing-md;
   }
 
-  ul {
+  .tasks-section {
+    margin-bottom: $spacing-lg;
+  }
+
+  .no-tasks {
+    color: #aaa;
+    font-style: italic;
+  }
+
+  .tasks-list {
     list-style: none;
     padding: 0;
+    margin-bottom: $spacing-md;
   }
 
-  li {
-    margin-bottom: $spacing-sm;
-    padding: $spacing-sm;
+  .task-item {
     background-color: $secondary-bg;
     border-radius: $border-radius;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: $spacing-md;
+    margin-bottom: $spacing-sm;
+    color: $text-dark;
+    overflow: hidden;
 
-    .board-link {
-      flex: 1;
-      text-decoration: none;
-      color: $text-dark;
+    &.active {
+      background-color: #4a515e;
+    }
 
-      .board-info-section {
-        strong {
-          display: block;
-          margin-bottom: 4px;
-        }
+    .task-header {
+      padding: $spacing-sm;
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+      cursor: pointer;
+      transition: background-color 0.2s;
 
-        .board-owner {
-          font-size: $font-size-small;
-          color: #666;
-        }
-      }
-
-      &:hover strong {
-        text-decoration: underline;
+      &:hover {
+        background-color: #3d4148;
       }
     }
 
-    .board-actions {
+    .task-title {
+      flex: 1;
+      font-weight: 500;
+    }
+
+    .task-status {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      white-space: nowrap;
+
+      &.status-todo {
+        background-color: #555;
+        color: $text-light;
+      }
+
+      &.status-in-progress {
+        background-color: #f39c12;
+        color: #000;
+      }
+
+      &.status-done {
+        background-color: #27ae60;
+        color: $text-light;
+      }
+    }
+
+    .task-actions {
       display: flex;
       gap: $spacing-sm;
 
@@ -85,6 +123,30 @@
         }
       }
     }
+
+    .task-comments-wrapper {
+      padding: 0 $spacing-sm $spacing-sm $spacing-sm;
+      border-top: 1px solid #555;
+      margin-top: $spacing-sm;
+    }
+  }
+
+  .create-task-btn {
+    color: $primary-color;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: $font-size-base;
+    transition: text-decoration 0.2s;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &::before {
+      content: '+ ';
+      margin-right: 4px;
+    }
   }
 
   .actions {
@@ -100,24 +162,6 @@
       &:hover {
         text-decoration: underline;
       }
-    }
-  }
-
-  .create-board-link {
-    color: $primary-color;
-    text-decoration: none;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: $font-size-base;
-    transition: text-decoration 0.2s;
-
-    &:hover {
-      text-decoration: underline;
-    }
-
-    &::before {
-      content: '+ ';
-      margin-right: 4px;
     }
   }
 
@@ -143,6 +187,12 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     position: relative;
     color: $text-dark;
+
+    h3 {
+      color: $text-dark;
+      margin-top: 0;
+      margin-bottom: $spacing-md;
+    }
 
     .modal-close {
       position: absolute;
@@ -188,12 +238,6 @@
         border-color: $primary-color;
       }
     }
-
-    .owner-info {
-      margin-bottom: $spacing-md;
-      color: $text-dark;
-      font-size: $font-size-small;
-    }
   }
 
   .form-actions {
@@ -228,6 +272,15 @@
       &:hover {
         background-color: #666;
       }
+    }
+  }
+
+  .back-link {
+    color: $primary-color;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 }
