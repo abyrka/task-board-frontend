@@ -48,27 +48,37 @@
     }
   }
 
-  input,
-  select {
-    display: block;
-    width: 100%;
+  .form-group {
     margin-bottom: $spacing-md;
-    padding: $spacing-sm;
-    border: $border-width solid $border-color;
-    border-radius: $border-radius;
-    background-color: white;
-    color: $text-dark;
-    font-family: inherit;
-    font-size: $font-size-base;
-    box-sizing: border-box;
 
-    &::placeholder {
-      color: #999;
+    label {
+      display: block;
+      color: $text-dark;
+      font-weight: 500;
+      margin-bottom: $spacing-xs;
+      font-size: 14px;
     }
 
-    &:focus {
-      outline: none;
-      border-color: $primary-color;
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: $spacing-sm;
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+      font-size: 14px;
+      font-family: inherit;
+      box-sizing: border-box;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
     }
   }
 

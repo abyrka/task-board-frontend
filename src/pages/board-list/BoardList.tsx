@@ -21,8 +21,10 @@ const BoardList: React.FC = () => {
 
   useEffect(() => {
     fetchUsers();
-    fetchBoards();
-  }, [fetchUsers, fetchBoards]);
+    if (currentUser) {
+      fetchBoards(currentUser._id);
+    }
+  }, [fetchUsers, fetchBoards, currentUser]);
 
   const handleSaveBoard = async (name: string) => {
     try {
@@ -34,7 +36,9 @@ const BoardList: React.FC = () => {
       }
       setShowModal(false);
       setEditingBoard(null);
-      await fetchBoards();
+      if (currentUser) {
+        await fetchBoards(currentUser._id);
+      }
     } catch (err: any) {
       console.error('Failed to save board:', err);
     }
@@ -46,6 +50,10 @@ const BoardList: React.FC = () => {
   };
 
   const handleCreateBoard = () => {
+    if (!currentUser) {
+      alert('Please select a user to create a board');
+      return;
+    }
     setEditingBoard(null);
     setShowModal(true);
   };
@@ -57,7 +65,9 @@ const BoardList: React.FC = () => {
 
     try {
       await deleteBoard(id);
-      await fetchBoards();
+      if (currentUser) {
+        await fetchBoards(currentUser._id);
+      }
     } catch (err: any) {
       console.error('Failed to delete board:', err);
     }
@@ -78,25 +88,35 @@ const BoardList: React.FC = () => {
       <h2>Boards</h2>
       {loading && <div>Loading...</div>}
       {error && <div className="error">{error}</div>}
-      <ul>
-        {boards.map((board) => (
-          <li key={board._id}>
-            <Link to={`/boards/${board._id}/tasks`} className="board-link">
-              <div className="board-info-section">
-                <strong>{board.name}</strong>
-                <div className="board-owner">Owner: {getOwnerName(board.ownerId)}</div>
+      {boards.length === 0 && !loading ? (
+        <p className="no-boards">No boards yet</p>
+      ) : (
+        <ul>
+          {boards.map((board) => (
+            <li key={board._id}>
+              <Link to={`/boards/${board._id}/tasks`} className="board-link">
+                <div className="board-info-section">
+                  <strong>{board.name}</strong>
+                  <div className="board-owner">Owner: {getOwnerName(board.ownerId)}</div>
+                </div>
+              </Link>
+              <div className="board-actions">
+                <button className="btn-edit" onClick={() => handleEditBoard(board)}>Edit</button>
+                <button className="btn-delete" onClick={(e) => handleDeleteBoard(board._id, e)}>Delete</button>
               </div>
-            </Link>
-            <div className="board-actions">
-              <button className="btn-edit" onClick={() => handleEditBoard(board)}>Edit</button>
-              <button className="btn-delete" onClick={(e) => handleDeleteBoard(board._id, e)}>Delete</button>
-            </div>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      )}
       <div className="actions">
         <Link to="/">← Back to Home</Link>
-        <Link onClick={handleCreateBoard}>Create New Board</Link>
+        <Link 
+          onClick={handleCreateBoard}
+          className={!currentUser ? 'disabled' : ''}
+          style={{ opacity: !currentUser ? 0.5 : 1, cursor: !currentUser ? 'not-allowed' : 'pointer' }}
+        >
+          Create New Board
+        </Link>
       </div>
 
       {showModal && (

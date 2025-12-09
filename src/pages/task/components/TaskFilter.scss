@@ -1,0 +1,86 @@
+.task-filter {
+  background-color: #1a1a1a;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+    min-width: 200px;
+
+    label {
+      color: #aaa;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    select,
+    input {
+      padding: 8px 12px;
+      font-size: 14px;
+      border: 1px solid #444;
+      border-radius: 4px;
+      background-color: #282c34;
+      color: white;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+        border-color: #61dafb;
+      }
+
+      &:hover {
+        border-color: #61dafb;
+      }
+    }
+
+    input {
+      cursor: text;
+
+      &::placeholder {
+        color: #666;
+      }
+    }
+
+    .clear-filters {
+      padding: 8px 16px;
+      background-color: #ff6b6b;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: #ee5555;
+      }
+
+      &:active {
+        background-color: #dd4444;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .filter-row {
+      flex-direction: column;
+    }
+
+    .filter-group {
+      min-width: 100%;
+    }
+  }
+}

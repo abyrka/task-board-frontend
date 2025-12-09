@@ -65,20 +65,24 @@ const UserList: React.FC = () => {
       <h2>Users</h2>
       {loading && <div>Loading...</div>}
       {error && <div className="error">{error}</div>}
-      <ul>
-        {users.map((user) => (
-          <li key={user._id}>
-            <div className="user-info">
-              <strong>{user.name}</strong>
-              <div className="user-email">{user.email}</div>
-            </div>
-            <div className="user-actions">
-              <button className="btn-edit" onClick={() => handleEditUser(user)}>Edit</button>
-              <button className="btn-delete" onClick={() => handleDeleteUser(user._id)}>Delete</button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {users.length === 0 && !loading ? (
+        <p className="no-users">No users yet</p>
+      ) : (
+        <ul>
+          {users.map((user) => (
+            <li key={user._id}>
+              <div className="user-info">
+                <strong>{user.name}</strong>
+                <div className="user-email">{user.email}</div>
+              </div>
+              <div className="user-actions">
+                <button className="btn-edit" onClick={() => handleEditUser(user)}>Edit</button>
+                <button className="btn-delete" onClick={() => handleDeleteUser(user._id)}>Delete</button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
       <div className="actions">
         <Link to="/">← Back to Home</Link>
         <Link onClick={handleCreateUser}>Create New User</Link>

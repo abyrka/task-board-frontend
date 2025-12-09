@@ -57,6 +57,31 @@
         line-height: 1.4;
       }
 
+      .comment-actions {
+        display: flex;
+        gap: $spacing-xs;
+        margin-top: 8px;
+      }
+
+      .btn-edit-comment,
+      .btn-delete-comment {
+        padding: 4px 8px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: opacity 0.2s;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
+      .btn-edit-comment {
+        background-color: $primary-color;
+        color: $text-dark;
+      }
+
       .btn-delete-comment {
         padding: 4px 8px;
         background-color: $error-color;
@@ -69,6 +94,56 @@
 
         &:hover {
           opacity: 0.8;
+        }
+      }
+
+      .comment-edit-form {
+        margin-top: 8px;
+
+        textarea {
+          width: 100%;
+          padding: $spacing-sm;
+          border: $border-width solid $border-color;
+          border-radius: $border-radius;
+          font-family: inherit;
+          font-size: $font-size-base;
+          color: $text-dark;
+          resize: vertical;
+          box-sizing: border-box;
+
+          &:focus {
+            outline: none;
+            border-color: $primary-color;
+          }
+        }
+
+        .edit-actions {
+          display: flex;
+          gap: $spacing-xs;
+          margin-top: 8px;
+
+          button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+
+            &:hover {
+              opacity: 0.8;
+            }
+          }
+
+          .btn-save-comment {
+            background-color: $primary-color;
+            color: $text-dark;
+          }
+
+          .btn-cancel-edit {
+            background-color: #999;
+            color: white;
+          }
         }
       }
     }

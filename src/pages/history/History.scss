@@ -1,0 +1,190 @@
+@import '../../styles/variables';
+
+.history-page {
+  padding: $spacing-md;
+  background-color: $background-dark;
+  min-height: 100vh;
+  color: $text-light;
+
+  h2 {
+    color: $text-light;
+    margin-bottom: $spacing-md;
+  }
+
+  .no-user-selected {
+    text-align: center;
+    color: $error-color;
+    font-style: italic;
+    padding: 40px 20px;
+    background-color: rgba(255, 107, 107, 0.1);
+    border-radius: $border-radius;
+  }
+
+  .current-user-info {
+    color: #888;
+    margin-bottom: $spacing-md;
+    padding: $spacing-sm;
+    background-color: rgba(97, 218, 251, 0.1);
+    border-radius: $border-radius;
+    border-left: 3px solid $primary-color;
+
+    strong {
+      color: $primary-color;
+    }
+  }
+
+  .loading {
+    text-align: center;
+    color: $primary-color;
+    padding: $spacing-md;
+    font-style: italic;
+  }
+
+  .history-filter {
+    display: flex;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-md;
+
+    input {
+      flex: 1;
+      padding: $spacing-sm;
+      font-size: $font-size-base;
+      border: $border-width solid $border-color;
+      border-radius: $border-radius;
+      background-color: white;
+      color: $text-dark;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+
+    button {
+      padding: $spacing-sm $spacing-md;
+      background-color: $primary-color;
+      color: $text-dark;
+      border: none;
+      border-radius: $border-radius;
+      cursor: pointer;
+      font-weight: 500;
+
+      &:hover:not(:disabled) {
+        opacity: 0.9;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .error {
+    color: $error-color;
+    padding: $spacing-sm;
+    margin-bottom: $spacing-md;
+    background-color: rgba(255, 107, 107, 0.1);
+    border-radius: $border-radius;
+  }
+
+  .no-history {
+    text-align: center;
+    color: #aaa;
+    font-style: italic;
+    padding: 40px 20px;
+  }
+
+  .history-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: $spacing-md;
+  }
+
+  .history-item {
+    background-color: $secondary-bg;
+    border-radius: $border-radius;
+    padding: $spacing-md;
+    margin-bottom: $spacing-sm;
+    color: $text-dark;
+    transition: all 0.2s;
+
+    &:hover {
+      box-shadow: 0 2px 8px rgba(97, 218, 251, 0.1);
+    }
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: $spacing-sm;
+      padding-bottom: $spacing-sm;
+      border-bottom: 1px solid #ddd;
+
+      .history-field {
+        font-weight: 600;
+        color: $text-dark;
+        font-size: $font-size-base;
+      }
+
+      .history-date {
+        color: #666;
+        font-size: $font-size-small;
+      }
+    }
+
+    .history-change {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: $spacing-md;
+      margin-bottom: $spacing-sm;
+
+      .history-old,
+      .history-new {
+        padding: $spacing-sm;
+        border-radius: $border-radius;
+        font-size: $font-size-small;
+
+        strong {
+          display: block;
+          margin-bottom: 4px;
+          font-size: 12px;
+          text-transform: uppercase;
+          color: #666;
+        }
+      }
+
+      .history-old {
+        background-color: rgba(255, 107, 107, 0.1);
+        border-left: 3px solid $error-color;
+      }
+
+      .history-new {
+        background-color: rgba(81, 207, 102, 0.1);
+        border-left: 3px solid #27ae60;
+      }
+    }
+
+    .history-user {
+      font-size: $font-size-small;
+      color: #666;
+      font-style: italic;
+    }
+  }
+
+  .actions {
+    margin-top: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    a {
+      color: $primary-color;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

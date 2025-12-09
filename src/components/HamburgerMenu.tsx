@@ -29,6 +29,11 @@ const HamburgerMenu: React.FC = () => {
                 Boards
               </Link>
             </li>
+            <li>
+              <Link to="/history" onClick={() => setIsOpen(false)}>
+                History
+              </Link>
+            </li>
           </ul>
         </nav>
       )}

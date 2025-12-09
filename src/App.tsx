@@ -5,6 +5,7 @@ import Home from './pages/home/Home';
 import BoardList from './pages/board-list/BoardList';
 import TaskList from './pages/task/TaskList';
 import UserList from './pages/user-list/UserList';
+import History from './pages/history/History';
 import { CurrentUserProvider } from './context/CurrentUserContext';
 
 const App: React.FC = () => {
@@ -16,6 +17,7 @@ const App: React.FC = () => {
           <Route path="/users" element={<UserList />} />
           <Route path="/boards" element={<BoardList />} />
           <Route path="/boards/:id/tasks" element={<TaskList />} />
+          <Route path="/history" element={<History />} />
         </Routes>
       </BrowserRouter>
     </CurrentUserProvider>

@@ -30,6 +30,11 @@
 
   .tasks-section {
     margin-bottom: $spacing-lg;
+
+    h3 {
+      margin: 0 0 $spacing-md 0;
+      color: $text-light;
+    }
   }
 
   .no-tasks {
@@ -95,6 +100,36 @@
       }
     }
 
+    .task-status-select {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      white-space: nowrap;
+      border: none;
+      cursor: pointer;
+      outline: none;
+
+      &.status-todo {
+        background-color: #555;
+        color: $text-light;
+      }
+
+      &.status-in-progress {
+        background-color: #f39c12;
+        color: #000;
+      }
+
+      &.status-done {
+        background-color: #27ae60;
+        color: $text-light;
+      }
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
     .task-actions {
       display: flex;
       gap: $spacing-sm;
@@ -122,6 +157,21 @@
           color: $text-light;
         }
       }
+    }
+
+    .task-description {
+      padding: 0 $spacing-sm $spacing-xs $spacing-sm;
+      color: #333;
+      font-size: $font-size-small;
+      line-height: 1.4;
+      white-space: pre-wrap;
+    }
+
+    .task-assignee {
+      padding: 0 $spacing-sm $spacing-xs $spacing-sm;
+      color: #333;
+      font-size: $font-size-small;
+      font-style: italic;
     }
 
     .task-comments-wrapper {

@@ -8,3 +8,20 @@ export const apiClient = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+// Response interceptor to handle errors globally
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.data?.message) {
+      // Display error message from backend
+      alert(error.response.data.message);
+    } else if (error.message) {
+      // Display generic error message
+      alert(`Error: ${error.message}`);
+    } else {
+      alert('An unexpected error occurred');
+    }
+    return Promise.reject(error);
+  }
+);

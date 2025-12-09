@@ -1,0 +1,101 @@
+@import '../../../styles/variables';
+
+.task-history {
+  margin-top: $spacing-lg;
+  padding: $spacing-md;
+  background-color: $secondary-bg;
+  border-radius: $border-radius;
+  color: $text-dark;
+
+  h4 {
+    margin-top: 0;
+    margin-bottom: $spacing-md;
+    color: $text-dark;
+  }
+
+  .loading {
+    text-align: center;
+    color: #666;
+    padding: $spacing-md;
+    font-style: italic;
+  }
+
+  .no-history {
+    color: #999;
+    font-style: italic;
+    text-align: center;
+    padding: $spacing-md 0;
+    margin: 0;
+  }
+
+  .history-list {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  .history-item {
+    background-color: white;
+    border-radius: $border-radius;
+    padding: $spacing-sm;
+    margin-bottom: $spacing-sm;
+    border-left: 3px solid #666;
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: $spacing-xs;
+      padding-bottom: $spacing-xs;
+      border-bottom: 1px solid #ddd;
+
+      .history-field {
+        font-weight: 600;
+        color: $text-dark;
+        font-size: $font-size-base;
+      }
+
+      .history-date {
+        color: #666;
+        font-size: $font-size-small;
+      }
+    }
+
+    .history-change {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: $spacing-sm;
+      margin-bottom: $spacing-xs;
+
+      .history-old,
+      .history-new {
+        padding: $spacing-xs;
+        border-radius: $border-radius;
+        font-size: $font-size-small;
+
+        strong {
+          display: block;
+          margin-bottom: 4px;
+          font-size: 11px;
+          text-transform: uppercase;
+          color: #666;
+        }
+      }
+
+      .history-old {
+        background-color: rgba(255, 107, 107, 0.1);
+        border-left: 2px solid $error-color;
+      }
+
+      .history-new {
+        background-color: rgba(81, 207, 102, 0.1);
+        border-left: 2px solid #27ae60;
+      }
+    }
+
+    .history-user {
+      font-size: $font-size-small;
+      color: #666;
+      font-style: italic;
+    }
+  }
+}

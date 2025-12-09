@@ -6,7 +6,7 @@ interface BoardsStore {
   boards: Board[];
   loading: boolean;
   error: string | null;
-  fetchBoards: () => Promise<void>;
+  fetchBoards: (userId: string) => Promise<void>;
   createBoard: (name: string, ownerId: string) => Promise<Board>;
   updateBoard: (id: string, name: string) => Promise<void>;
   deleteBoard: (id: string) => Promise<void>;
@@ -17,10 +17,10 @@ export const useBoardsStore = create<BoardsStore>((set) => ({
   loading: false,
   error: null,
 
-  fetchBoards: async () => {
+  fetchBoards: async (userId) => {
     set({ loading: true, error: null });
     try {
-      const res = await apiClient.get('/boards');
+      const res = await apiClient.get(`/boards/user/${userId}`);
       set({ boards: res.data });
     } catch (err: any) {
       set({ error: err.response?.data?.message || 'Failed to fetch boards' });

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useCommentsStore, useTasksStore, useUsersStore } from '../../../store';
+import { useCommentsStore, useUsersStore } from '../../../store';
 import { useCurrentUser } from '../../../context/CurrentUserContext';
 import './TaskComments.scss';
 
@@ -17,16 +17,16 @@ interface Comment {
 
 const TaskComments: React.FC<TaskCommentsProps> = ({ taskId }) => {
   const { currentUser } = useCurrentUser();
-  const tasks = useTasksStore((s) => s.tasks);
   const users = useUsersStore((s) => s.users);
+  const comments = useCommentsStore((s) => s.comments);
   const fetchTaskComments = useCommentsStore((s) => s.fetchTaskComments);
   const createComment = useCommentsStore((s) => s.createComment);
+  const updateComment = useCommentsStore((s) => s.updateComment);
   const deleteComment = useCommentsStore((s) => s.deleteComment);
   const [commentText, setCommentText] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const task = tasks.find((t) => t._id === taskId);
-  const comments = task?.comments || [];
+  const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
+  const [editingText, setEditingText] = useState('');
 
   useEffect(() => {
     fetchTaskComments(taskId);
@@ -73,8 +73,31 @@ const TaskComments: React.FC<TaskCommentsProps> = ({ taskId }) => {
     }
   };
 
+  const handleEditComment = (comment: Comment) => {
+    setEditingCommentId(comment._id);
+    setEditingText(comment.text);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingCommentId(null);
+    setEditingText('');
+  };
+
+  const handleUpdateComment = async (commentId: string) => {
+    if (!editingText.trim()) return;
+
+    try {
+      await updateComment(commentId, editingText);
+      setEditingCommentId(null);
+      setEditingText('');
+      await fetchTaskComments(taskId);
+    } catch (err) {
+      console.error('Failed to update comment:', err);
+    }
+  };
+
   return (
-    <div className="task-comments">
+    <div className="task-comments" onClick={(e) => e.stopPropagation()}>
       <h4>Comments ({comments.length})</h4>
 
       <div className="comments-list">
@@ -87,21 +110,57 @@ const TaskComments: React.FC<TaskCommentsProps> = ({ taskId }) => {
                 <strong>{getUserName(comment.userId)}</strong>
                 <span className="comment-date">{formatDate(comment.createdAt)}</span>
               </div>
-              <p className="comment-text">{comment.text}</p>
-              {currentUser?._id === comment.userId && (
-                <button
-                  className="btn-delete-comment"
-                  onClick={() => handleDeleteComment(comment._id)}
-                >
-                  Delete
-                </button>
+              
+              {editingCommentId === comment._id ? (
+                <div className="comment-edit-form">
+                  <textarea
+                    value={editingText}
+                    onChange={(e) => setEditingText(e.target.value)}
+                    rows={3}
+                    autoFocus
+                  />
+                  <div className="edit-actions">
+                    <button
+                      className="btn-save-comment"
+                      onClick={() => handleUpdateComment(comment._id)}
+                    >
+                      Save
+                    </button>
+                    <button
+                      className="btn-cancel-edit"
+                      onClick={handleCancelEdit}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <p className="comment-text">{comment.text}</p>
+                  {currentUser?._id === comment.userId && (
+                    <div className="comment-actions">
+                      <button
+                        className="btn-edit-comment"
+                        onClick={() => handleEditComment(comment)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn-delete-comment"
+                        onClick={() => handleDeleteComment(comment._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           ))
         )}
       </div>
 
-      <div className="comment-form">
+      <div className="comment-form" onClick={(e) => e.stopPropagation()}>
         <textarea
           placeholder="Add a comment..."
           value={commentText}
