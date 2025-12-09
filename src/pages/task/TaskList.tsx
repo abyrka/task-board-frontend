@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useBoardsStore, useTasksStore, useUsersStore } from '../../store';
 import { useCurrentUser } from '../../context/CurrentUserContext';
-import { TaskStatus, TASK_STATUS_LABELS } from '../../types';
+import { TaskStatus } from '../../types';
 import TaskModal from './components/TaskModal';
 import TaskComments from './components/TaskComments';
 import TaskFilter from './components/TaskFilter';
 import TaskHistory from './components/TaskHistory';
+import MembersModal from '../../shared/components/MembersModal';
 import { useDebounce } from '../../shared/hooks/useDebounce';
 import './TaskList.scss';
 
@@ -17,6 +18,7 @@ const TaskList: React.FC = () => {
   const tasks = useTasksStore((s) => s.tasks);
   const users = useUsersStore((s) => s.users);
   const fetchBoards = useBoardsStore((s) => s.fetchBoards);
+  const updateBoardMembers = useBoardsStore((s) => s.updateBoardMembers);
   const fetchFilteredTasks = useTasksStore((s) => s.fetchFilteredTasks);
   const fetchUsers = useUsersStore((s) => s.fetchUsers);
   const updateTask = useTasksStore((s) => s.updateTask);
@@ -24,6 +26,7 @@ const TaskList: React.FC = () => {
   const loading = useTasksStore((s) => s.loading);
   const error = useTasksStore((s) => s.error);
   const [showModal, setShowModal] = useState(false);
+  const [showMembersModal, setShowMembersModal] = useState(false);
   const [editingTask, setEditingTask] = useState<{ _id: string; title: string; status: string; description?: string; assigneeId?: string } | null>(null);
   const [selectedTask, setSelectedTask] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<TaskStatus | 'all'>('all');
@@ -37,6 +40,18 @@ const TaskList: React.FC = () => {
 
   const board = boards.find((b) => b._id === id);
 
+  const applyFilters = useCallback(() => {
+    if (!id) return;
+
+    const filters: any = { boardId: id };
+    if (statusFilter !== 'all') filters.status = statusFilter;
+    if (assigneeFilter) filters.assigneeId = assigneeFilter;
+    if (debouncedTitleFilter) filters.title = debouncedTitleFilter;
+    if (debouncedDescriptionFilter) filters.description = debouncedDescriptionFilter;
+
+    fetchFilteredTasks(filters);
+  }, [id, statusFilter, assigneeFilter, debouncedTitleFilter, debouncedDescriptionFilter, fetchFilteredTasks]);
+
   useEffect(() => {
     if (id && currentUser) {
       if (users.length === 0) {
@@ -48,25 +63,13 @@ const TaskList: React.FC = () => {
         applyFilters();
       }
     }
-  }, [id, currentUser, fetchBoards, fetchUsers, boards.length, users.length]);
+  }, [id, currentUser, fetchBoards, fetchUsers, boards.length, users.length, applyFilters]);
 
   useEffect(() => {
     if (id) {
       applyFilters();
     }
-  }, [statusFilter, assigneeFilter, debouncedTitleFilter, debouncedDescriptionFilter]);
-
-  const applyFilters = () => {
-    if (!id) return;
-
-    const filters: any = { boardId: id };
-    if (statusFilter !== 'all') filters.status = statusFilter;
-    if (assigneeFilter) filters.assigneeId = assigneeFilter;
-    if (debouncedTitleFilter) filters.title = debouncedTitleFilter;
-    if (debouncedDescriptionFilter) filters.description = debouncedDescriptionFilter;
-
-    fetchFilteredTasks(filters);
-  };
+  }, [id, applyFilters]);
 
   const handleClearFilters = () => {
     setStatusFilter('all');
@@ -138,6 +141,25 @@ const TaskList: React.FC = () => {
     return owner?.name || 'Unknown';
   };
 
+  const getMemberNames = (memberIds?: string[]) => {
+    if (!memberIds || memberIds.length === 0) return 'None';
+    return memberIds
+      .map(id => users.find(u => u._id === id)?.name || 'Unknown')
+      .join(', ');
+  };
+
+  const handleSaveMembers = async (memberIds: string[]) => {
+    if (!id || !currentUser) return;
+
+    try {
+      await updateBoardMembers(id, memberIds);
+      await fetchBoards(currentUser._id);
+      setShowMembersModal(false);
+    } catch (err) {
+      console.error('Failed to update members:', err);
+    }
+  };
+
   if (loading) return <div className="board-detail">Loading...</div>;
 
   if (!board) {
@@ -152,7 +174,15 @@ const TaskList: React.FC = () => {
   return (
     <div className="board-detail">
       <h2>{board.name}</h2>
-      <p className="board-info">Owner: {getOwnerName(board.ownerId)}</p>
+      <div className="board-meta">
+        <p className="board-info">Owner: {getOwnerName(board.ownerId)}</p>
+        <p className="board-info">
+          Members: {getMemberNames(board.memberIds)}
+          <button className="btn-manage-members" onClick={() => setShowMembersModal(true)}>
+            Manage Members
+          </button>
+        </p>
+      </div>
 
       {error && <div className="error">{error}</div>}
 
@@ -248,6 +278,15 @@ const TaskList: React.FC = () => {
           task={editingTask}
           onSave={handleSaveTask}
           onClose={handleCloseModal}
+        />
+      )}
+
+      {showMembersModal && (
+        <MembersModal
+          currentMemberIds={board?.memberIds}
+          ownerId={board?.ownerId || ''}
+          onSave={handleSaveMembers}
+          onClose={() => setShowMembersModal(false)}
         />
       )}
     </div>

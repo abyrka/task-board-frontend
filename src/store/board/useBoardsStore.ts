@@ -7,8 +7,9 @@ interface BoardsStore {
   loading: boolean;
   error: string | null;
   fetchBoards: (userId: string) => Promise<void>;
-  createBoard: (name: string, ownerId: string) => Promise<Board>;
+  createBoard: (name: string, ownerId: string, memberIds?: string[]) => Promise<Board>;
   updateBoard: (id: string, name: string) => Promise<void>;
+  updateBoardMembers: (id: string, memberIds: string[]) => Promise<void>;
   deleteBoard: (id: string) => Promise<void>;
 }
 
@@ -29,9 +30,9 @@ export const useBoardsStore = create<BoardsStore>((set) => ({
     }
   },
 
-  createBoard: async (name, ownerId) => {
+  createBoard: async (name, ownerId, memberIds) => {
     try {
-      const res = await apiClient.post('/boards', { name, ownerId });
+      const res = await apiClient.post('/boards', { name, ownerId, memberIds });
       set((state) => ({ boards: [...state.boards, res.data] }));
       return res.data;
     } catch (err: any) {
@@ -47,6 +48,17 @@ export const useBoardsStore = create<BoardsStore>((set) => ({
       }));
     } catch (err: any) {
       throw new Error(err.response?.data?.message || 'Failed to update board');
+    }
+  },
+
+  updateBoardMembers: async (id, memberIds) => {
+    try {
+      await apiClient.patch(`/boards/${id}/members`, { memberIds });
+      set((state) => ({
+        boards: state.boards.map((b) => (b._id === id ? { ...b, memberIds } : b)),
+      }));
+    } catch (err: any) {
+      throw new Error(err.response?.data?.message || 'Failed to update board members');
     }
   },
 

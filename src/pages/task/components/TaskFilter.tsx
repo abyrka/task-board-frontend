@@ -1,5 +1,5 @@
 import React from 'react';
-import { TaskStatus, TASK_STATUS_LABELS } from '../../../types';
+import { TaskStatus } from '../../../types';
 import { useUsersStore } from '../../../store';
 import './TaskFilter.scss';
 

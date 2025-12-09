@@ -10,6 +10,7 @@ const BoardList: React.FC = () => {
   const fetchBoards = useBoardsStore((s) => s.fetchBoards);
   const createBoard = useBoardsStore((s) => s.createBoard);
   const updateBoard = useBoardsStore((s) => s.updateBoard);
+  const updateBoardMembers = useBoardsStore((s) => s.updateBoardMembers);
   const deleteBoard = useBoardsStore((s) => s.deleteBoard);
   const users = useUsersStore((s) => s.users);
   const fetchUsers = useUsersStore((s) => s.fetchUsers);
@@ -17,7 +18,7 @@ const BoardList: React.FC = () => {
   const error = useBoardsStore((s) => s.error);
   const { currentUser } = useCurrentUser();
   const [showModal, setShowModal] = useState(false);
-  const [editingBoard, setEditingBoard] = useState<{ _id: string; name: string } | null>(null);
+  const [editingBoard, setEditingBoard] = useState<{ _id: string; name: string; memberIds?: string[]; ownerId?: string } | null>(null);
 
   useEffect(() => {
     fetchUsers();
@@ -26,13 +27,16 @@ const BoardList: React.FC = () => {
     }
   }, [fetchUsers, fetchBoards, currentUser]);
 
-  const handleSaveBoard = async (name: string) => {
+  const handleSaveBoard = async (name: string, memberIds?: string[]) => {
     try {
       if (editingBoard) {
         await updateBoard(editingBoard._id, name);
+        if (memberIds) {
+          await updateBoardMembers(editingBoard._id, memberIds);
+        }
       } else {
         if (!currentUser) return;
-        await createBoard(name, currentUser._id);
+        await createBoard(name, currentUser._id, memberIds);
       }
       setShowModal(false);
       setEditingBoard(null);
@@ -44,7 +48,7 @@ const BoardList: React.FC = () => {
     }
   };
 
-  const handleEditBoard = (board: { _id: string; name: string }) => {
+  const handleEditBoard = (board: { _id: string; name: string; memberIds?: string[]; ownerId: string }) => {
     setEditingBoard(board);
     setShowModal(true);
   };
@@ -83,6 +87,13 @@ const BoardList: React.FC = () => {
     return owner?.name || 'Unknown';
   };
 
+  const getMemberNames = (memberIds?: string[]) => {
+    if (!memberIds || memberIds.length === 0) return 'None';
+    return memberIds
+      .map(id => users.find(u => u._id === id)?.name || 'Unknown')
+      .join(', ');
+  };
+
   return (
     <div className="board-list">
       <h2>Boards</h2>
@@ -98,6 +109,7 @@ const BoardList: React.FC = () => {
                 <div className="board-info-section">
                   <strong>{board.name}</strong>
                   <div className="board-owner">Owner: {getOwnerName(board.ownerId)}</div>
+                  <div className="board-members">Members: {getMemberNames(board.memberIds)}</div>
                 </div>
               </Link>
               <div className="board-actions">
@@ -123,6 +135,7 @@ const BoardList: React.FC = () => {
         <BoardModal
           board={editingBoard}
           ownerName={currentUser?.name}
+          ownerId={currentUser?._id}
           onSave={handleSaveBoard}
           onClose={handleCloseModal}
         />

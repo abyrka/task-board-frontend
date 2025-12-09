@@ -46,9 +46,14 @@
           margin-bottom: 4px;
         }
 
-        .board-owner {
+        .board-owner,
+        .board-members {
           font-size: $font-size-small;
           color: #666;
+        }
+
+        .board-members {
+          margin-top: 2px;
         }
       }
 

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useHistoryStore, useTasksStore, useUsersStore } from '../../store';
+import React, { useEffect } from 'react';
+import { useHistoryStore, useUsersStore } from '../../store';
 import { useCurrentUser } from '../../context/CurrentUserContext';
 import { Link } from 'react-router-dom';
 import './History.scss';
@@ -10,7 +10,6 @@ const History: React.FC = () => {
   const fetchUserHistory = useHistoryStore((s) => s.fetchUserHistory);
   const loading = useHistoryStore((s) => s.loading);
   const error = useHistoryStore((s) => s.error);
-  const tasks = useTasksStore((s) => s.tasks);
   const users = useUsersStore((s) => s.users);
   const fetchUsers = useUsersStore((s) => s.fetchUsers);
 
